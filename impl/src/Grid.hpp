@@ -12,6 +12,7 @@ public:
     void printSolved();
     bool generate(int);
     bool solve(int[9][9]);
+    void countSolutions(int&);
 
 private:
     int data[9][9];

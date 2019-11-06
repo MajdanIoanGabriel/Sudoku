@@ -113,6 +113,28 @@ bool Grid::solve(int gridData[9][9] ) {
     return false;
 }
 
+void Grid::countSolutions(int &number) {
+    int row;
+    int column;
+
+    if(!findEmpty(data,row,column)) {
+        number++;
+        return;
+    }
+
+
+    for(int i=0; i<9 && number<2; i++)
+    {
+        if( isValid(data,row,column,i+1) )
+        {
+            data[row][column] = i+1;
+            countSolutions(number);
+        }
+
+        data[row][column] = 0;
+    }
+}
+
 bool Grid::generate(int difficulty) {
     return true;
     
