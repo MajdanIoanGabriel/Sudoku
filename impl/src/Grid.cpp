@@ -20,7 +20,7 @@ Grid::Grid() {
         solvedData[0][i] = values[i];
     }
 
-    if(solve())
+    if(solve(solvedData))
         std::cout<<"Grid succesfully generated"<<std::endl;
     
     for(int i=0; i<9; i++)
@@ -54,58 +54,58 @@ void Grid::printSolved() {
         
 }
 
-bool Grid::inRow(int row, int column, int el) {
+bool Grid::inRow(int gridData[9][9] , int row, int column, int el) {
     for(int i=0; i<9; i++)
-        if(el == solvedData [row][i])
+        if(el == gridData [row][i])
             return true;
     return false;
 }
 
-bool Grid::inColumn(int row, int column, int el) {
+bool Grid::inColumn(int gridData[9][9] , int row, int column, int el) {
     for(int i=0; i<9; i++)
-        if(el == solvedData [i][column])
+        if(el == gridData [i][column])
             return true;
     return false;
 }
 
-bool Grid::inSquare(int row, int column, int el) {
+bool Grid::inSquare(int gridData[9][9] , int row, int column, int el) {
     row = row/3*3;
     column = column/3*3;
 
     for(int i=row; i<row+3; i++)
         for(int j=column; j<column+3; j++)
-            if(el == solvedData [i][j])
+            if(el == gridData [i][j])
                 return true;
     return false;
 }
 
-bool Grid::isValid(int row, int column, int el) {
-    if(inRow(row,column,el) || inColumn(row,column,el) || inSquare(row,column,el))
+bool Grid::isValid(int gridData[9][9] , int row, int column, int el) {
+    if(inRow(gridData,row,column,el) || inColumn(gridData,row,column,el) || inSquare(gridData,row,column,el))
         return false;
     return true;
 }
 
-bool Grid::findEmpty(int &row, int &column) {
+bool Grid::findEmpty(int gridData[9][9] , int &row, int &column) {
     for(row=0; row<9; row++)
         for(column=0; column<9; column++)
-            if(!solvedData [row][column])
+            if(!gridData[row][column])
                 return true;
     return false;
 }
 
-bool Grid::solve() {
+bool Grid::solve(int gridData[9][9] ) {
     int row;
     int column;
 
-    if(!findEmpty(row,column))
+    if(!findEmpty(gridData,row,column))
     return true;
 
     for(int val=1; val<=9; val++) {
-        if(isValid(row,column,val)) {
-            solvedData [row][column] = val;
-            if(solve())
+        if(isValid(gridData,row,column,val)) {
+            gridData[row][column] = val;
+            if(solve(gridData))
                 return true;
-            solvedData [row][column] = 0;
+            gridData[row][column] = 0;
         }
 
     }
