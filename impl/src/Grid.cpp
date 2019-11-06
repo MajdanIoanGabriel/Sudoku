@@ -13,7 +13,12 @@ Grid::Grid() {
     int column;
     int values[] = {1,2,3,4,5,6,7,8,9};
 
+    for(int i=0; i<81; i++) {
+        gridPos[i] = i;
+    }
+
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::shuffle(gridPos,gridPos+81,std::default_random_engine(seed));
     std::shuffle(values,values+9,std::default_random_engine(seed));
 
     for(int i=0; i<9; i++) {
@@ -22,10 +27,7 @@ Grid::Grid() {
 
     if(solve(solvedData))
         std::cout<<"Grid succesfully generated"<<std::endl;
-    
-    for(int i=0; i<9; i++)
-        for(int j=0; j<9; j++)
-            data[i][j] = 0;
+
 }
 
 Grid::Grid(int** d) {
@@ -135,8 +137,43 @@ void Grid::countSolutions(int &number) {
     }
 }
 
-bool Grid::generate(int difficulty) {
-    return true;
-    
+int Grid::countEmptyPos(int gridData[9][9]) {
+    int counter = 0;
+    for(int i=0; i<9; i++)
+        for(int j=0; j<9; j++)
+            if(!gridData[i][j])
+                counter++;
+    return counter;
+}
+
+void Grid::generate(int difficulty) {
+    for(int i=0; i<9; i++)
+        for(int j=0; j<9; j++)
+            data[i][j] = solvedData[i][j];
+
+    for(int i=0;i<81;i++)
+    {
+        int x = (gridPos[i])/9;
+        int y = (gridPos[i])%9;
+        int val = data[x][y];
+
+        data[x][y] = 0;
+
+        int check=0;
+        countSolutions(check);
+        if(check!=1)
+            data[x][y] = val;
+    }
+
+    if(difficulty == 4)
+        return;
+
+    int counter = countEmptyPos(data);
+        for(int i=0; i<counter; i+=difficulty+1) {
+        int x = (gridPos[i])/9;
+        int y = (gridPos[i])%9;
+        data[x][y] = solvedData[x][y];
+    }
+        
 
 }
