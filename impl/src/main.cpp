@@ -5,6 +5,7 @@ int main() {
     
     Grid sudoku;
     int difficulty;
+    sudoku.printSolved();
     
     std::cout<<"\nPlease enter dificulty: \n"
         <<"1. Easy \n"
@@ -13,7 +14,7 @@ int main() {
     std::cin>>difficulty;
 
     if(sudoku.generate(difficulty))
-        sudoku.print();
+        sudoku.printData();
     
     return 0;
 }

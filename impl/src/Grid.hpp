@@ -8,12 +8,14 @@ public:
     Grid(int**);
     ~Grid();
 
-    void print();
+    void printData();
+    void printSolved();
     bool generate(int);
     bool solve();
 
 private:
     int data[9][9];
+    int solvedData[9][9];
 
     bool inRow(int,int,int);
     bool inColumn(int,int,int);
