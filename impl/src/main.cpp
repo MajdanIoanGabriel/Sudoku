@@ -1,29 +1,28 @@
-#include <iostream>
-#include "Grid.hpp"
+#include <QApplication>
+#include <QPushButton>
+#include <QWidget>
+#include <QStackedLayout>
+#include "MainWindow.h"
+#include "GameWindow.h"
 
-int main() {
-    
-    Grid sudoku;
-    int difficulty;
-    std::cout<<"Solved sudoku grid:\n";
-    sudoku.printSolved();
+int main(int argc, char **argv)
+{
+    QApplication app (argc, argv);
+    QWidget parent;
+    parent.setFixedSize(600,600);
 
-    std::cout<<"Sudoku on easy difficulty:\n";
-    sudoku.generate(1);
-    sudoku.printData();
-    
-    std::cout<<"Sudoku on medium difficulty:\n";
-    sudoku.generate(2);
-    sudoku.printData();
+    //MainWindow Main;
+    GameWindow Game;
+    QStackedLayout layout;
+    //layout.setStackingMode(QStackedLayout::StackAll);
+    //layout.addWidget(&Main);
+    layout.addWidget(&Game);
 
-    std::cout<<"Sudoku on hard difficulty:\n";
-    sudoku.generate(3);
-    sudoku.printData();
+    //layout.setCurrentWidget(&Main);
 
-    std::cout<<"Sudoku on insane difficulty:\n";
-    sudoku.generate(4);
-    sudoku.printData();
-    
-    
-    return 0;
+    parent.setLayout(&layout);
+    parent.show();
+
+return app.exec();
+
 }

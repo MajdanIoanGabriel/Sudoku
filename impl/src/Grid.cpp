@@ -41,7 +41,11 @@ Grid::~Grid() {}
 void Grid::printData() {
     for(int i=0; i<9; i++) {
         for(int j=0; j<9; j++)
-            std::cout<<data[i][j]<<" ";
+            if(data[i][j])
+                std::cout<<data[i][j]<<" ";
+            else
+                std::cout<<"  ";
+            
         std::cout<<std::endl;
     }
         
