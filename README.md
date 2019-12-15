@@ -15,3 +15,6 @@ where difficulty:
   2 - normal
   3 - hard
   4 - insane
+  
+  For an easy setup on linux OS, use git clone https://github.com/MajdanIoanGabriel/Sudoku.git
+
