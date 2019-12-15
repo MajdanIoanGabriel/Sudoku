@@ -1,3 +1,4 @@
+#include <iostream>
 #include <QApplication>
 #include <QPushButton>
 #include <QWidget>
@@ -5,14 +6,34 @@
 #include "../inc/MainWindow.hpp"
 #include "../inc/GameWindow.hpp"
 
+
+void usage() {
+    std::cout<<"In order to generate a new game, run:\n"
+    <<"./sudoku [dificulty]\n"
+    <<"where difficulty:\n"
+    <<"1 - easy\n"
+    <<"2 - normal\n"
+    <<"3 - hard\n"
+    <<"4 - insane\n";
+    exit(1);
+}
+
 int main(int argc, char **argv)
 {
+    std::string difficulty{argv[1]};
+    
+    if(difficulty.length() != 1)
+        usage();
+    else if(difficulty[0] < '1' || difficulty[0] > '4')
+            usage();
+
     QApplication app (argc, argv);
     QWidget parent;
     parent.setFixedSize(600,600);
 
+    
     //MainWindow Main;
-    GameWindow Game;
+    GameWindow Game(stoi(difficulty));
     QStackedLayout layout;
     //layout.setStackingMode(QStackedLayout::StackAll);
     //layout.addWidget(&Main);

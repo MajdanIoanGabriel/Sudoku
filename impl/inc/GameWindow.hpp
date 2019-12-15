@@ -28,7 +28,7 @@ private:
     QGridLayout* generateGridLayout(Grid*);
     void setCell(int,int,int);
 public:
-    explicit GameWindow(QWidget *parent = 0);
+    explicit GameWindow(int difficulty, QWidget *parent = 0);
     ~GameWindow();
 public slots:
     void clear();

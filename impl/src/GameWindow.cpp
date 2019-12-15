@@ -1,11 +1,11 @@
 #include "../inc/GameWindow.hpp"
 
-GameWindow::GameWindow(QWidget *parent): QWidget(parent) {
+GameWindow::GameWindow(int difficulty, QWidget *parent): QWidget(parent) {
 
     layout = new QVBoxLayout();
     bottomLayout = new QHBoxLayout();
     grid = new Grid();
-    grid->generate(2);
+    grid->generate(difficulty);
     gridLayout = generateGridLayout(grid);
 
     layout->addLayout(gridLayout);
