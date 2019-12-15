@@ -1,10 +1,17 @@
 #!/bin/bash
+if ! [ -z $1 ]; then
+    if [ $1 = 'rm' ]; then
+        rm sudoku
+        echo "Executable removed."
+        exit 0
+    fi
+fi
 
 cd impl
 cmake .
-make
+make 
 
-rm -r Makefile CMakeCache.txt  CMakeFiles/ cmake_install.cmake
+rm -r Makefile CMakeCache.txt  CMakeFiles/ cmake_install.cmake *.cpp 
 
 mv sudoku ../
 

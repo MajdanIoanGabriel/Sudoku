@@ -8,12 +8,12 @@ public:
     Grid(int**);
     ~Grid();
 
-    void printData();
-    void printSolved();
     void generate(int);
     bool solve(int[9][9]);
     void countSolutions(int&);
     int countEmptyPos(int[9][9]);
+    int elem(int,int);
+    int solvedElem(int,int);
 
 private:
     int data[9][9];
