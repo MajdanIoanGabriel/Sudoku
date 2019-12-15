@@ -2,8 +2,8 @@
 #include <QPushButton>
 #include <QWidget>
 #include <QStackedLayout>
-#include "MainWindow.h"
-#include "GameWindow.h"
+#include "../inc/MainWindow.hpp"
+#include "../inc/GameWindow.hpp"
 
 int main(int argc, char **argv)
 {

@@ -13,6 +13,7 @@
 #include <QTextCursor>
 #include <string>
 #include "Grid.hpp"
+#include "Number.hpp"
 
 class GameWindow: public QWidget
 {
@@ -24,7 +25,6 @@ private:
     QVBoxLayout *layout;
     Grid *grid;
 
-    QTextEdit* Number(std::string color, int n);
     QGridLayout* generateGridLayout(Grid*);
     void setCell(int,int,int);
 public:
