@@ -1,4 +1,4 @@
-#include "GameWindow.h"
+#include "../inc/GameWindow.hpp"
 
 GameWindow::GameWindow(QWidget *parent): QWidget(parent) {
 
@@ -32,29 +32,13 @@ GameWindow::GameWindow(QWidget *parent): QWidget(parent) {
 
 GameWindow::~GameWindow() {}
 
-QTextEdit* GameWindow::Number(std::string color, int n=0) {
-    QTextEdit *elem = new QTextEdit();
-
-    elem->setStyleSheet(("QTextEdit { background-color: "+color+"; font-size: 33px; color: "+(n==0 ? "#999999" : "#000000")+"}").c_str());
-    
-
-    if(n) {
-        elem->setText(QString(std::to_string(n).c_str()));
-        elem->setReadOnly(true);
-    }
-
-    elem->setAlignment(Qt::AlignCenter);
-
-    return elem;
-}
-
 QGridLayout* GameWindow::generateGridLayout(Grid *grid) {
     QGridLayout *layout = new QGridLayout();
     for(int i=1; i<=9; i+=3)
         for(int j=1; j<=9; j+=3)
             for(int k=i; k<i+3; k++)
                 for(int l=j; l<j+3; l++)
-                        layout->addWidget(Number((i+j)%2 ? "#dfdfdf" : "#ffffff",grid->elem(k,l)),k,l);
+                        layout->addWidget(new Number(grid->elem(k,l),(i+j)%2 ? "#dfdfdf" : "#ffffff"),k,l);
     return layout;
 }
 

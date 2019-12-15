@@ -1,4 +1,4 @@
-#include "Grid.hpp"
+#include "../inc/Grid.hpp"
 #include <iostream>
 #include <algorithm>
 #include <random>
