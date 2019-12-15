@@ -38,24 +38,6 @@ Grid::Grid(int** d) {
 
 Grid::~Grid() {}
 
-void Grid::printData() {
-    for(int i=0; i<9; i++) {
-        for(int j=0; j<9; j++)
-            std::cout<<data[i][j]<<" ";
-        std::cout<<std::endl;
-    }
-        
-}
-
-void Grid::printSolved() {
-    for(int i=0; i<9; i++) {
-        for(int j=0; j<9; j++)
-            std::cout<<solvedData[i][j]<<" ";
-        std::cout<<std::endl;
-    }
-        
-}
-
 bool Grid::inRow(int gridData[9][9] , int row, int column, int el) {
     for(int i=0; i<9; i++)
         if(el == gridData [row][i])
@@ -174,6 +156,12 @@ void Grid::generate(int difficulty) {
         int y = (gridPos[i])%9;
         data[x][y] = solvedData[x][y];
     }
-        
+}
 
+int Grid::elem(int i, int j) {
+    return data[i-1][j-1];
+}
+
+int Grid::solvedElem(int i, int j) {
+    return solvedData[i-1][j-1];
 }
