@@ -18,14 +18,20 @@ void usage() {
     exit(1);
 }
 
-int main(int argc, char **argv)
-{
-    std::string difficulty{argv[1]};
-    
+void verify(char* diff_arg) {
+    if(!diff_arg)
+        usage();
+    std::string difficulty{diff_arg};
     if(difficulty.length() != 1)
         usage();
     else if(difficulty[0] < '1' || difficulty[0] > '4')
             usage();
+}
+
+int main(int argc, char **argv)
+{
+    verify(argv[1]);
+    std::string difficulty{argv[1]};
 
     QApplication app (argc, argv);
     QWidget parent;
