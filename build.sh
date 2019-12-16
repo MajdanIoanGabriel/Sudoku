@@ -11,7 +11,7 @@ cd impl
 cmake .
 make 
 
-rm -r Makefile CMakeCache.txt  CMakeFiles/ cmake_install.cmake *.cpp 
+rm -r Makefile CMakeCache.txt  CMakeFiles/ cmake_install.cmake sudoku_autogen/
 
 mv sudoku ../
 
