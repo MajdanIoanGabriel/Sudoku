@@ -27,6 +27,7 @@ private:
 
     QGridLayout* generateGridLayout(Grid*);
     void setCell(int,int,int);
+    Number* cell(int,int);
 public:
     explicit GameWindow(int difficulty, QWidget *parent = 0);
     ~GameWindow();

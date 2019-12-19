@@ -13,7 +13,7 @@ Number::Number(int n, std::string color, QTextEdit *parent): QTextEdit(parent) {
     setCursorWidth(0);
     setAlignment(Qt::AlignCenter);
     setFrameShape(QFrame::Box);
-    //setLineWidth(1);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     
     connect(this, SIGNAL(textChanged()), this, SLOT(validate()));
     connect(this, SIGNAL(selectionChanged()), this, SLOT(focus()));
@@ -38,12 +38,12 @@ void Number::validate() {
 } 
 
 void Number::focus() {
-    if(isReadOnly())
-        return;
-    setLineWidth(2);
-    if(this == selected)
-        return;
     if(selected)
         selected->setLineWidth(1);
+    if(isReadOnly()) {
+        selected = nullptr;
+        return;
+    }
+    setLineWidth(2);
     selected = this;
 }
