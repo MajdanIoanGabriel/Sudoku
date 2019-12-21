@@ -12,7 +12,8 @@ set(
     src/MainWindow.cpp
     src/Number.cpp
     inc/Number.hpp
-    inc/GameWindow.hpp)
+    inc/GameWindow.hpp
+    inc/MainWindow.hpp)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 

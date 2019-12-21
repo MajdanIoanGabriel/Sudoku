@@ -1,7 +1,7 @@
 #include "../inc/MainWindow.hpp"
 
 MainWindow::MainWindow(QWidget *parent): QWidget(parent) {
-    setFixedSize(400,400);
+    //setFixedSize(400,400);
 
     layout = new QVBoxLayout();
 
@@ -17,12 +17,14 @@ MainWindow::MainWindow(QWidget *parent): QWidget(parent) {
 
     this->setLayout(layout);
 
-    connect(s_button, SIGNAL(clicked()), this, SLOT(hide()));
+    connect(s_button, SIGNAL(clicked()), this, SLOT(start()));
     connect(q_button, SIGNAL(clicked()), QApplication::instance(), SLOT(quit()));
 
     show();
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow() {}
+
+void MainWindow::start() {
+    ((QStackedWidget*)parent())->setCurrentWidget(((QStackedWidget*)parent())->widget(1));
 }

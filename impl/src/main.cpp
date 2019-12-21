@@ -2,10 +2,9 @@
 #include <QApplication>
 #include <QPushButton>
 #include <QWidget>
-#include <QStackedLayout>
+#include <QStackedWidget>
 #include "../inc/MainWindow.hpp"
 #include "../inc/GameWindow.hpp"
-
 
 void usage() {
     std::cout<<"In order to generate a new game, run:\n"
@@ -34,21 +33,19 @@ int main(int argc, char **argv)
     std::string difficulty{argv[1]};
 
     QApplication app (argc, argv);
-    QWidget parent;
-    parent.setFixedSize(600,600);
+    QStackedWidget *parent = new QStackedWidget();
+    parent->setFixedSize(600,600);
 
     
-    //MainWindow Main;
-    GameWindow Game(stoi(difficulty));
-    QStackedLayout layout;
-    //layout.setStackingMode(QStackedLayout::StackAll);
-    //layout.addWidget(&Main);
-    layout.addWidget(&Game);
+    MainWindow Main(parent);
+    GameWindow Game(stoi(difficulty),parent);
 
-    //layout.setCurrentWidget(&Main);
+    parent->addWidget(&Main);
+    parent->addWidget(&Game);
 
-    parent.setLayout(&layout);
-    parent.show();
+    parent->setCurrentWidget(&Main);
+
+    parent->show();
 
 return app.exec();
 
