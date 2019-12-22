@@ -10,17 +10,20 @@ GameWindow::GameWindow(int difficulty, QWidget *parent): QWidget(parent) {
 
     layout->addLayout(gridLayout);
     
-    clear_button = new QPushButton("Clear", new QWidget());
-    solve_button = new QPushButton("Solve", new QWidget());
-    q_button = new QPushButton("Quit", new QWidget());
+    clear_button = new QPushButton("Clear");
+    solve_button = new QPushButton("Solve");
+    back_button = new QPushButton("Back");
+    q_button = new QPushButton("Quit");
     
     bottomLayout->addWidget(clear_button);
     bottomLayout->addWidget(solve_button);
+    bottomLayout->addWidget(back_button);
     bottomLayout->addWidget(q_button);
 
-    connect(solve_button, SIGNAL(clicked()), this, SLOT(solve()));
-    connect(q_button, SIGNAL(clicked()), QApplication::instance(), SLOT(quit()));
     connect(clear_button, SIGNAL(clicked()), this, SLOT(clear()));
+    connect(solve_button, SIGNAL(clicked()), this, SLOT(solve()));
+    connect(back_button, SIGNAL(clicked()), this, SLOT(back()));
+    connect(q_button, SIGNAL(clicked()), QApplication::instance(), SLOT(quit()));
 
     layout->addLayout(bottomLayout);
     layout->setAlignment(gridLayout,Qt::AlignTop);
@@ -60,4 +63,8 @@ void GameWindow::solve() {
     for(int i=1; i<=9; i++)
         for(int j=1; j<=9; j++)
             setCell(i,j,grid->solvedElem(i,j));
+}
+
+void GameWindow::back() {
+    ((QStackedWidget*)parent())->setCurrentWidget(((QStackedWidget*)parent())->widget(0));
 }

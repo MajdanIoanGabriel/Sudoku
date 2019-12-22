@@ -3,7 +3,7 @@
 Number* Number::selected;
 
 Number::Number(int n, std::string color, QTextEdit *parent): QTextEdit(parent) {
-    setStyleSheet(("QTextEdit { background-color: "+color+"; font-size: 33px; color: "+(n==0 ? "#999999" : "#000000")+"}").c_str());
+    setStyleSheet(("Number { background-color: "+color+"; font-size: 33px; color: "+(n==0 ? "#999999" : "#000000")+"}").c_str());
     
     if(n) {
         setText(QString(std::to_string(n).c_str()));

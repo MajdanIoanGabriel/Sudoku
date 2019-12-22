@@ -1,19 +1,32 @@
 #include "../inc/MainWindow.hpp"
 
 MainWindow::MainWindow(QWidget *parent): QWidget(parent) {
-    //setFixedSize(400,400);
 
-    layout = new QVBoxLayout();
+    layout = new QGridLayout();
+    QVBoxLayout *button_layout = new QVBoxLayout();
 
-    s_button = new QPushButton("Start", new QWidget());
-    s_button->setGeometry(0, 0, 80, 30);
-    layout->addWidget(s_button);
-    layout->setAlignment(s_button,Qt::AlignBottom);
+    title = new QLabel("SUDOKU");
+    title->setStyleSheet("QLabel { font-family: \"Times New Roman\", Times, serif; font-size: 100px; }");
 
-    q_button = new QPushButton("Quit", new QWidget());
-    q_button->setGeometry(0, 0, 80, 30);
-    layout->addWidget(q_button);
-    layout->setAlignment(q_button,Qt::AlignTop);
+    s_button = new QPushButton("Start");
+    q_button = new QPushButton("Quit");
+
+    s_button->setFixedSize(200,30);
+    q_button->setFixedSize(200,30);
+
+    button_layout->addWidget(s_button);
+    button_layout->addWidget(q_button);
+
+    button_layout->setAlignment(s_button,Qt::AlignHCenter);
+    button_layout->setAlignment(q_button,Qt::AlignHCenter);
+
+    layout->addWidget(title,1,2);
+    layout->addWidget(new QWidget(),2,1);
+    layout->addLayout(button_layout,2,2);
+    layout->addWidget(new QWidget(),2,3);
+    layout->addWidget(new QWidget(),3,1);
+    layout->addWidget(new QWidget(),3,2);
+    layout->addWidget(new QWidget(),3,3);
 
     this->setLayout(layout);
 
@@ -26,5 +39,6 @@ MainWindow::MainWindow(QWidget *parent): QWidget(parent) {
 MainWindow::~MainWindow() {}
 
 void MainWindow::start() {
-    ((QStackedWidget*)parent())->setCurrentWidget(((QStackedWidget*)parent())->widget(1));
+    QStackedWidget *stack = ((QStackedWidget*)parent());
+    stack->setCurrentWidget(stack->widget(1));
 }

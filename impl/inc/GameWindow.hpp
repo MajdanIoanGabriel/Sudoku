@@ -4,6 +4,7 @@
 #include <QApplication>
 #include <QPushButton>
 #include <QWidget>
+#include <QStackedWidget>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGridLayout>
@@ -21,7 +22,7 @@ class GameWindow: public QWidget
 private:
     QGridLayout *gridLayout;
     QHBoxLayout *bottomLayout;
-    QPushButton *clear_button, *solve_button, *q_button;
+    QPushButton *clear_button, *solve_button, *back_button, *q_button;
     QVBoxLayout *layout;
     Grid *grid;
 
@@ -34,6 +35,7 @@ public:
 public slots:
     void clear();
     void solve();
+    void back();
 };
 
 #endif
