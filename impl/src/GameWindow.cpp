@@ -39,7 +39,7 @@ QGridLayout* GameWindow::generateGridLayout(Grid *grid) {
     QGridLayout *layout = new QGridLayout();
     for(int i=1; i<=9; i++)
         for(int j=1; j<=9; j++)
-            layout->addWidget(new Number(grid->elem(i,j),((i-1)/3+(j-1)/3)%2 ? "#dfdfdf" : "#ffffff"),i,j);
+            layout->addWidget(new Number(grid->elem(i,j),i,j,((i-1)/3+(j-1)/3)%2 ? "#dfdfdf" : "#ffffff", this),i,j);
     return layout;
 }
 
@@ -50,6 +50,10 @@ Number* GameWindow::cell(int i, int j) {
 void GameWindow::setCell(int i, int j, int data) {
     cell(i,j)->setText(QString(data ? std::to_string(data).c_str() : ""));
     cell(i,j)->setAlignment(Qt::AlignCenter);
+}
+
+Grid* GameWindow::getGrid() {
+    return grid;
 }
 
 void GameWindow::clear() {
@@ -63,8 +67,53 @@ void GameWindow::solve() {
     for(int i=1; i<=9; i++)
         for(int j=1; j<=9; j++)
             setCell(i,j,grid->solvedElem(i,j));
+    validate();
 }
 
 void GameWindow::back() {
     ((QStackedWidget*)parent())->setCurrentWidget(((QStackedWidget*)parent())->widget(0));
+}
+
+bool GameWindow::inRow(int x, int y) {
+    for(int j=1; j<=9; j++) {
+        if(y == j)
+            continue;
+        if(cell(x,y)->value() == getGrid()->elem(x,j))
+            return true;
+    }  
+    return false;
+}
+
+bool GameWindow::inColumn(int x, int y) {
+    for(int i=1; i<=9; i++) {
+        if(x == i)
+            continue;
+        if(cell(x,y)->value() == getGrid()->elem(i,y))
+            return true;
+    }
+    return false;
+}
+
+bool GameWindow::inSquare(int x, int y) {
+    int row = (x-1)/3*3;
+    int column = (y-1)/3*3;
+
+    for(int i=row+1; i<=row+3; i++)
+        for(int j=column+1; j<=column+3; j++) {
+            if(x == i && y == j)
+                continue;
+            if(cell(x,y)->value() == getGrid()->elem(i,j))
+                return true;
+        }
+    return false;
+}
+
+void GameWindow::validate() {
+    for(int i=1; i<=9; i++) 
+        for(int j=1; j<=9; j++) {
+            if((inRow(i,j) || inColumn(i,j) || inSquare(i,j)) && !(cell(i,j)->value() == 0))
+                cell(i,j)->setColor("red");
+            else
+                cell(i,j)->setColor(); 
+        }
 }

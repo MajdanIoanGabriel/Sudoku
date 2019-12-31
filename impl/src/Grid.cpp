@@ -160,6 +160,10 @@ int Grid::elem(int i, int j) {
     return data[i-1][j-1];
 }
 
+void Grid::setElem(int x, int i, int j) {
+    data[i-1][j-1] = x;
+}
+
 int Grid::solvedElem(int i, int j) {
     return solvedData[i-1][j-1];
 }

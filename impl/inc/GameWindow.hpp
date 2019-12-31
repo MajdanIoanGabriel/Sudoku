@@ -16,6 +16,7 @@
 #include "Grid.hpp"
 #include "Number.hpp"
 
+class Number;
 class GameWindow: public QWidget
 {
     Q_OBJECT
@@ -29,13 +30,18 @@ private:
     QGridLayout* generateGridLayout(Grid*);
     void setCell(int,int,int);
     Number* cell(int,int);
+    bool inRow(int,int);
+    bool inColumn(int,int);
+    bool inSquare(int,int);
 public:
     explicit GameWindow(int difficulty, QWidget *parent = 0);
     ~GameWindow();
+    Grid* getGrid();
 public slots:
     void clear();
     void solve();
     void back();
+    void validate();
 };
 
 #endif
