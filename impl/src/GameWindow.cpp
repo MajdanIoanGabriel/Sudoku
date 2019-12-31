@@ -48,7 +48,7 @@ Number* GameWindow::cell(int i, int j) {
 }
 
 void GameWindow::setCell(int i, int j, int data) {
-    cell(i,j)->setText(QString(data ? std::to_string(data).c_str() : ""));
+    cell(i,j)->setText(QString(std::to_string(data).c_str()));
     cell(i,j)->setAlignment(Qt::AlignCenter);
 }
 
@@ -59,14 +59,21 @@ Grid* GameWindow::getGrid() {
 void GameWindow::clear() {
     for(int i=1; i<=9; i++)
         for(int j=1; j<=9; j++)
-            if(!grid->elem(i,j))
+            if(!(cell(i,j)->isReadOnly())) {
+                disconnect(cell(i,j), SIGNAL(textChanged()), this, SLOT(validate()));
                 setCell(i,j,0);
+                connect(cell(i,j), SIGNAL(textChanged()), this, SLOT(validate()));
+            }     
+    validate();    
 }
 
 void GameWindow::solve() {
     for(int i=1; i<=9; i++)
-        for(int j=1; j<=9; j++)
+        for(int j=1; j<=9; j++) {
+            disconnect(cell(i,j), SIGNAL(textChanged()), this, SLOT(validate()));
             setCell(i,j,grid->solvedElem(i,j));
+            connect(cell(i,j), SIGNAL(textChanged()), this, SLOT(validate()));
+        }
     validate();
 }
 
