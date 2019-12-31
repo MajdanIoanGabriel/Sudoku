@@ -106,7 +106,6 @@ void Grid::countSolutions(int &number) {
         return;
     }
 
-
     for(int i=0; i<9 && number<2; i++)
     {
         if( isValid(data,row,column,i+1) )
@@ -114,7 +113,6 @@ void Grid::countSolutions(int &number) {
             data[row][column] = i+1;
             countSolutions(number);
         }
-
         data[row][column] = 0;
     }
 }
@@ -160,6 +158,10 @@ void Grid::generate(int difficulty) {
 
 int Grid::elem(int i, int j) {
     return data[i-1][j-1];
+}
+
+void Grid::setElem(int x, int i, int j) {
+    data[i-1][j-1] = x;
 }
 
 int Grid::solvedElem(int i, int j) {

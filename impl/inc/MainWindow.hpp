@@ -4,17 +4,24 @@
 #include <QApplication>
 #include <QPushButton>
 #include <QWidget>
+#include <QStackedWidget>
+#include <QGridLayout>
 #include <QVBoxLayout>
+#include <QLabel>
 
 
 class MainWindow: public QWidget
 {
+    Q_OBJECT
 private:
+    QLabel *title;
     QPushButton *s_button, *q_button;
-    QVBoxLayout *layout;
+    QGridLayout *layout;
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+public slots:
+    void start();
 };
 
 #endif

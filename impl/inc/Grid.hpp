@@ -13,6 +13,7 @@ public:
     void countSolutions(int&);
     int countEmptyPos(int[9][9]);
     int elem(int,int);
+    void setElem(int,int,int);
     int solvedElem(int,int);
 
 private:
