@@ -119,7 +119,7 @@ void GameWindow::validate() {
     for(int i=1; i<=9; i++) 
         for(int j=1; j<=9; j++) {
             if((inRow(i,j) || inColumn(i,j) || inSquare(i,j)) && !(cell(i,j)->value() == 0))
-                cell(i,j)->setColor("red");
+                cell(i,j)->setColor("#ff483b");
             else
                 cell(i,j)->setColor(); 
         }
