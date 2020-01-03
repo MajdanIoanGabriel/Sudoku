@@ -38,7 +38,7 @@ private:
     bool inColumn(int,int);
     bool inSquare(int,int);
 public:
-    explicit GameWindow(int difficulty, QWidget *parent = 0);
+    explicit GameWindow(QWidget *parent = 0);
     ~GameWindow();
     Grid* getGrid();
     void setUserName(QString);
@@ -48,6 +48,8 @@ public slots:
     void back();
     void validate();
     void save();
+    void newGame();
+    void continueGame();
 };
 
 #endif

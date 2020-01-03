@@ -8,7 +8,7 @@ public:
     Grid(int**);
     ~Grid();
 
-    void generate(int);
+    void generate(int difficulty = 0);
     bool solve(int[9][9]);
     void countSolutions(int&);
     int countEmptyPos(int[9][9]);

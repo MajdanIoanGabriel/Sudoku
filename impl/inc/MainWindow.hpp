@@ -22,6 +22,7 @@ private:
     QGridLayout *layout;
 public:
     explicit MainWindow(QWidget *parent = 0);
+    void init();
     ~MainWindow();
 public slots:
     void start();

@@ -45,10 +45,15 @@ MainWindow::MainWindow(QWidget *parent): QWidget(parent) {
 
     this->setLayout(layout);
 
-    connect(n_button, SIGNAL(clicked()), this, SLOT(start()));
-    connect(q_button, SIGNAL(clicked()), QApplication::instance(), SLOT(quit()));
-
     show();
+}
+
+void MainWindow::init() {
+    GameWindow* gameWindow = static_cast<GameWindow*>(((QStackedWidget*)parent())->widget(1));
+
+    connect(n_button, SIGNAL(clicked()), this, SLOT(start()));
+    connect(n_button, SIGNAL(clicked()), gameWindow, SLOT(newGame()));
+    connect(q_button, SIGNAL(clicked()), QApplication::instance(), SLOT(quit()));
 }
 
 MainWindow::~MainWindow() {}

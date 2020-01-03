@@ -1,13 +1,13 @@
 #include "../inc/GameWindow.hpp"
 
-GameWindow::GameWindow(int difficulty, QWidget *parent): QWidget(parent) {
+GameWindow::GameWindow(QWidget *parent): QWidget(parent) {
 
     layout = new QHBoxLayout();
     rightLayout = new QVBoxLayout();
     username = new QLabel();
     grid = new Grid();
 
-    grid->generate(difficulty);
+    grid->generate();
     gridLayout = generateGridLayout(grid);
 
     layout->addLayout(gridLayout);
@@ -147,9 +147,27 @@ void GameWindow::save() {
                 stream << getGrid()->elem(i,j) << " ";
             stream << endl;
         }
-        
+
         savefile.close();
     }
+}
+
+void GameWindow::newGame() {
+    grid = new Grid();
+    int difficulty{2};
+
+    grid->generate(difficulty);
+
+    for(int i=1; i<=9; i++)
+        for(int j=1; j<=9; j++) {
+            setCell(i,j,grid->elem(i,j));
+            if((cell(i,j)->value()))
+                cell(i,j)->setReadOnly(true);
+            cell(i,j)->setColor();
+        }
     
-    
+}
+
+void GameWindow::continueGame() {
+
 }
