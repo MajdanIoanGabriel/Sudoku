@@ -1,6 +1,8 @@
 #ifndef GAMEWINDOW_H
 #define GAMEWINDOW_H
 
+#include <iostream>
+#include <QFile>
 #include <QApplication>
 #include <QPushButton>
 #include <QWidget>
@@ -11,7 +13,8 @@
 #include <QTextEdit>
 #include <QString>
 #include <QFont>
-#include <QTextCursor>
+#include <QLabel>
+#include <QTextStream>
 #include <string>
 #include "Grid.hpp"
 #include "Number.hpp"
@@ -22,9 +25,10 @@ class GameWindow: public QWidget
     Q_OBJECT
 private:
     QGridLayout *gridLayout;
-    QHBoxLayout *bottomLayout;
+    QVBoxLayout *rightLayout;
+    QLabel *username;
     QPushButton *clear_button, *solve_button, *back_button, *q_button;
-    QVBoxLayout *layout;
+    QHBoxLayout *layout;
     Grid *grid;
 
     QGridLayout* generateGridLayout(Grid*);
@@ -37,11 +41,13 @@ public:
     explicit GameWindow(int difficulty, QWidget *parent = 0);
     ~GameWindow();
     Grid* getGrid();
+    void setUserName(QString);
 public slots:
     void clear();
     void solve();
     void back();
     void validate();
+    void save();
 };
 
 #endif

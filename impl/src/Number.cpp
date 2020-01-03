@@ -7,7 +7,8 @@ Number::Number(int n, int x, int y, std::string color, QWidget *parent): QTextEd
     this->x = x;
     this->y = y;
     setStyleSheet(("Number { background-color: "+color+"; font-size: 33px; color: "+(n==0 ? "#999999" : "#000000")+"} ").c_str());
-    
+    setFixedSize(60,60);
+
     if(n) {
         setText(QString(std::to_string(n).c_str()));
         setReadOnly(true);

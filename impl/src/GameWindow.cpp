@@ -2,9 +2,11 @@
 
 GameWindow::GameWindow(int difficulty, QWidget *parent): QWidget(parent) {
 
-    layout = new QVBoxLayout();
-    bottomLayout = new QHBoxLayout();
+    layout = new QHBoxLayout();
+    rightLayout = new QVBoxLayout();
+    username = new QLabel();
     grid = new Grid();
+
     grid->generate(difficulty);
     gridLayout = generateGridLayout(grid);
 
@@ -15,18 +17,22 @@ GameWindow::GameWindow(int difficulty, QWidget *parent): QWidget(parent) {
     back_button = new QPushButton("Back");
     q_button = new QPushButton("Quit");
     
-    bottomLayout->addWidget(clear_button);
-    bottomLayout->addWidget(solve_button);
-    bottomLayout->addWidget(back_button);
-    bottomLayout->addWidget(q_button);
+    rightLayout->addWidget(username);
+    rightLayout->addWidget(clear_button);
+    rightLayout->addWidget(solve_button);
+    rightLayout->addWidget(back_button);
+    rightLayout->addWidget(q_button);
 
     connect(clear_button, SIGNAL(clicked()), this, SLOT(clear()));
     connect(solve_button, SIGNAL(clicked()), this, SLOT(solve()));
+    connect(back_button, SIGNAL(clicked()), this, SLOT(save()));
+    connect(q_button, SIGNAL(clicked()), this, SLOT(save()));
     connect(back_button, SIGNAL(clicked()), this, SLOT(back()));
     connect(q_button, SIGNAL(clicked()), QApplication::instance(), SLOT(quit()));
 
-    layout->addLayout(bottomLayout);
+    layout->addLayout(rightLayout);
     layout->setAlignment(gridLayout,Qt::AlignTop);
+    rightLayout->setAlignment(username,Qt::AlignTop);
 
     this->setLayout(layout);
 
@@ -123,4 +129,27 @@ void GameWindow::validate() {
             else
                 cell(i,j)->setColor(); 
         }
+}
+
+void GameWindow::setUserName(QString uname) {
+    username->setText(uname);
+}
+
+void GameWindow::save() {
+    QString filename{username->text()+".txt"}, path{QCoreApplication::applicationDirPath()+"/saves/"};
+    QFile savefile{path+filename};
+    
+    if(savefile.open(QIODevice::ReadWrite)) {
+        QTextStream stream(&savefile);
+        
+        for(int i=1; i<=9; i++) {
+            for (int j=1; j<=9; j++)
+                stream << getGrid()->elem(i,j) << " ";
+            stream << endl;
+        }
+        
+        savefile.close();
+    }
+    
+    
 }
