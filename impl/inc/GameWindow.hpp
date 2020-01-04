@@ -48,8 +48,8 @@ public slots:
     void back();
     void validate();
     void save();
+    void load();
     void newGame();
-    void continueGame();
 };
 
 #endif

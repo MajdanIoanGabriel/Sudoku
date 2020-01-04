@@ -29,10 +29,12 @@ Grid::Grid() {
 
 }
 
-Grid::Grid(int** d) {
+Grid::Grid(int d[3][9][9]) {
     for(int i=0; i<9; i++)
-        for(int j=0; j<9; j++)
-            data[i][j] = d[i][j];
+        for(int j=0; j<9; j++) {
+            data[i][j] = d[0][i][j];
+            solvedData[i][j] = d[1][i][j];
+        }
 }
 
 Grid::~Grid() {}

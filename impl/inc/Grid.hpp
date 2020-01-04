@@ -5,7 +5,7 @@ class Grid
 {
 public:
     Grid();
-    Grid(int**);
+    Grid(int[3][9][9]);
     ~Grid();
 
     void generate(int difficulty = 0);

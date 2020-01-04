@@ -51,9 +51,12 @@ MainWindow::MainWindow(QWidget *parent): QWidget(parent) {
 void MainWindow::init() {
     GameWindow* gameWindow = static_cast<GameWindow*>(((QStackedWidget*)parent())->widget(1));
 
+    connect(username, SIGNAL(returnPressed()), this, SLOT(continueGame()));
     connect(n_button, SIGNAL(clicked()), this, SLOT(start()));
     connect(n_button, SIGNAL(clicked()), gameWindow, SLOT(newGame()));
     connect(q_button, SIGNAL(clicked()), QApplication::instance(), SLOT(quit()));
+
+    continueGame();
 }
 
 MainWindow::~MainWindow() {}
@@ -63,4 +66,21 @@ void MainWindow::start() {
     stack->setCurrentWidget(stack->widget(1));
 
     (static_cast<GameWindow*>(stack->widget(1)))->setUserName(username->text());
+}
+
+void MainWindow::continueGame() {
+    QString filename{username->text()+".txt"};
+    QString path{QCoreApplication::applicationDirPath()+"/saves/"};
+    GameWindow* gameWindow = static_cast<GameWindow*>(((QStackedWidget*)parent())->widget(1));
+
+    if(QFile::exists(path+filename)) {
+        connect(c_button, SIGNAL(clicked()), this, SLOT(start()));
+        connect(c_button, SIGNAL(clicked()), gameWindow, SLOT(load()));
+        c_button->setStyleSheet("");
+    }
+    else {
+        disconnect(c_button, SIGNAL(clicked()), this, SLOT(start()));
+        disconnect(c_button, SIGNAL(clicked()), gameWindow, SLOT(load()));
+        c_button->setStyleSheet("QPushButton { background-color: #999999; }");
+    }
 }

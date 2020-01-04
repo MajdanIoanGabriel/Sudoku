@@ -136,16 +136,51 @@ void GameWindow::setUserName(QString uname) {
 }
 
 void GameWindow::save() {
-    QString filename{username->text()+".txt"}, path{QCoreApplication::applicationDirPath()+"/saves/"};
+    QString filename{username->text()+".txt"};
+    QString path{QCoreApplication::applicationDirPath()+"/saves/"};
     QFile savefile{path+filename};
     
     if(savefile.open(QIODevice::ReadWrite)) {
         QTextStream stream(&savefile);
         
         for(int i=1; i<=9; i++) {
-            for (int j=1; j<=9; j++)
-                stream << getGrid()->elem(i,j) << " ";
+            for (int j=1; j<=9; j++) {
+                stream << getGrid()->elem(i,j) << getGrid()->solvedElem(i,j);
+                if(cell(i,j)->isReadOnly())
+                    stream << 1;
+                else 
+                    stream << 0;
+            }
             stream << endl;
+        }
+
+        savefile.close();
+    }
+}
+
+void GameWindow::load() {
+    QString filename{username->text()+".txt"}, path{QCoreApplication::applicationDirPath()+"/saves/"};
+    QFile savefile{path+filename};
+    
+    if(savefile.open(QIODevice::ReadWrite)) {
+        int loadedData[3][9][9];
+        for(int i=0; i<9; i++) {
+            QString line = savefile.readLine();
+            for (int j=0; j<9; j++) {
+                loadedData[0][i][j] = line[3*j].digitValue();
+                loadedData[1][i][j] = line[3*j+1].digitValue();
+                loadedData[2][i][j] = line[3*j+2].digitValue();
+            }
+        }
+
+        grid = new Grid(loadedData);
+
+        for(int i=1; i<=9; i++)
+            for(int j=1; j<=9; j++) {
+                setCell(i,j,loadedData[0][i-1][j-1]);
+                if(loadedData[2][i-1][j-1])
+                    cell(i,j)->setReadOnly(true);
+                cell(i,j)->setColor();
         }
 
         savefile.close();
@@ -166,8 +201,4 @@ void GameWindow::newGame() {
             cell(i,j)->setColor();
         }
     
-}
-
-void GameWindow::continueGame() {
-
 }
