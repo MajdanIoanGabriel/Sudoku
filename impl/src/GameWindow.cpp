@@ -5,13 +5,17 @@ GameWindow::GameWindow(QWidget *parent): QWidget(parent) {
     layout = new QHBoxLayout();
     rightLayout = new QVBoxLayout();
     username = new QLabel();
+    timeLabel = new QLabel();
     grid = new Grid();
+    timer = new QTimer(this);
+    time = new QTime(0,0);
 
     grid->generate();
     gridLayout = generateGridLayout(grid);
 
     setStyleSheet("QPushButton { font-family: \"Times New Roman\", Times, serif; font-size: 25px; }");
     username->setStyleSheet("QLabel { font-family: \"Times New Roman\", Times, serif; font-size: 35px; }");
+    timeLabel->setStyleSheet("QLabel { font-family: \"Times New Roman\", Times, serif; font-size: 35px; }");
 
 
     layout->addLayout(gridLayout);
@@ -27,12 +31,14 @@ GameWindow::GameWindow(QWidget *parent): QWidget(parent) {
     q_button->setFixedSize(250,50);
     
     rightLayout->addWidget(username);
+    rightLayout->addWidget(timeLabel);
     rightLayout->addWidget(clear_button);
     rightLayout->addWidget(solve_button);
     rightLayout->addWidget(back_button);
     rightLayout->addWidget(q_button);
 
     rightLayout->setAlignment(username,Qt::AlignTop | Qt::AlignHCenter);
+    rightLayout->setAlignment(timeLabel,Qt::AlignTop | Qt::AlignHCenter);
 
     connect(clear_button, SIGNAL(clicked()), this, SLOT(clear()));
     connect(solve_button, SIGNAL(clicked()), this, SLOT(solve()));
@@ -40,6 +46,7 @@ GameWindow::GameWindow(QWidget *parent): QWidget(parent) {
     connect(q_button, SIGNAL(clicked()), this, SLOT(save()));
     connect(back_button, SIGNAL(clicked()), this, SLOT(back()));
     connect(q_button, SIGNAL(clicked()), QApplication::instance(), SLOT(quit()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(count()));
 
     layout->addLayout(rightLayout);
     layout->setAlignment(gridLayout,Qt::AlignTop);
@@ -96,6 +103,7 @@ void GameWindow::solve() {
 
 void GameWindow::back() {
     ((QStackedWidget*)parent())->setCurrentWidget(((QStackedWidget*)parent())->widget(0));
+    timer->stop();
 }
 
 bool GameWindow::inRow(int x, int y) {
@@ -153,6 +161,8 @@ void GameWindow::save() {
     
     if(savefile.open(QIODevice::ReadWrite)) {
         QTextStream stream(&savefile);
+
+        stream << time->toString() << endl;
         
         for(int i=1; i<=9; i++) {
             for (int j=1; j<=9; j++) {
@@ -174,6 +184,7 @@ void GameWindow::load() {
     QFile savefile{path+filename};
     
     if(savefile.open(QIODevice::ReadWrite)) {
+        timeLabel->setText(savefile.readLine());
         int loadedData[3][9][9];
         for(int i=0; i<9; i++) {
             QString line = savefile.readLine();
@@ -198,12 +209,21 @@ void GameWindow::load() {
 
         validate();
         savefile.close();
+
+        int hour{timeLabel->text()[0].digitValue()*10+timeLabel->text()[1].digitValue()};
+        int minute{timeLabel->text()[3].digitValue()*10+timeLabel->text()[4].digitValue()};
+        int second{timeLabel->text()[6].digitValue()*10+timeLabel->text()[7].digitValue()};
+        time->setHMS(hour, minute, second);
+        timer->start(1000);
     }
 }
 
 void GameWindow::newGame() {
     grid = new Grid();
     int difficulty{(static_cast<MainWindow*>(((QStackedWidget*)parent())->widget(0)))->getDifficulty()};
+
+    timeLabel->setText("00:00:00");
+    time->setHMS(0,0,0);
 
     grid->generate(difficulty);
 
@@ -219,4 +239,10 @@ void GameWindow::newGame() {
             connect(cell(i,j), SIGNAL(textChanged()), this, SLOT(validate()));
         }
 
+    timer->start(1000);
+}
+
+void GameWindow::count() {
+    *time = time->addSecs(1);
+    timeLabel->setText(time->toString());
 }

@@ -15,6 +15,8 @@
 #include <QFont>
 #include <QLabel>
 #include <QTextStream>
+#include <QTimer>
+#include <QTime>
 #include <string>
 #include "MainWindow.hpp"
 #include "Grid.hpp"
@@ -27,10 +29,12 @@ class GameWindow: public QWidget
 private:
     QGridLayout *gridLayout;
     QVBoxLayout *rightLayout;
-    QLabel *username;
+    QLabel *username, *timeLabel;
     QPushButton *clear_button, *solve_button, *back_button, *q_button;
     QHBoxLayout *layout;
     Grid *grid;
+    QTimer *timer;
+    QTime *time;
 
     QGridLayout* generateGridLayout(Grid*);
     void setCell(int,int,int);
@@ -51,6 +55,7 @@ public slots:
     void save();
     void load();
     void newGame();
+    void count();
 };
 
 #endif
