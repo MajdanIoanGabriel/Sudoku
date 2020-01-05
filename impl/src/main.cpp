@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 {
     QApplication app (argc, argv);
     QStackedWidget *parent = new QStackedWidget();
-    parent->setFixedSize(800,600);
+    parent->setFixedSize(900,600);
 
     
     MainWindow Main(parent);

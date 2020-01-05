@@ -10,18 +10,29 @@ GameWindow::GameWindow(QWidget *parent): QWidget(parent) {
     grid->generate();
     gridLayout = generateGridLayout(grid);
 
+    setStyleSheet("QPushButton { font-family: \"Times New Roman\", Times, serif; font-size: 25px; }");
+    username->setStyleSheet("QLabel { font-family: \"Times New Roman\", Times, serif; font-size: 35px; }");
+
+
     layout->addLayout(gridLayout);
     
     clear_button = new QPushButton("Clear");
     solve_button = new QPushButton("Solve");
     back_button = new QPushButton("Back");
     q_button = new QPushButton("Quit");
+
+    clear_button->setFixedSize(250,50);
+    solve_button->setFixedSize(250,50);
+    back_button->setFixedSize(250,50);
+    q_button->setFixedSize(250,50);
     
     rightLayout->addWidget(username);
     rightLayout->addWidget(clear_button);
     rightLayout->addWidget(solve_button);
     rightLayout->addWidget(back_button);
     rightLayout->addWidget(q_button);
+
+    rightLayout->setAlignment(username,Qt::AlignTop | Qt::AlignHCenter);
 
     connect(clear_button, SIGNAL(clicked()), this, SLOT(clear()));
     connect(solve_button, SIGNAL(clicked()), this, SLOT(solve()));
@@ -32,7 +43,7 @@ GameWindow::GameWindow(QWidget *parent): QWidget(parent) {
 
     layout->addLayout(rightLayout);
     layout->setAlignment(gridLayout,Qt::AlignTop);
-    rightLayout->setAlignment(username,Qt::AlignTop);
+    layout->setAlignment(rightLayout,Qt::AlignHCenter);
 
     this->setLayout(layout);
 

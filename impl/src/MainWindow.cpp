@@ -12,22 +12,21 @@ MainWindow::MainWindow(QWidget *parent): QWidget(parent) {
 
     title->setStyleSheet("QLabel { font-family: \"Times New Roman\", Times, serif; font-size: 100px; }");
     username->setAlignment(Qt::AlignHCenter);
+    welcome->setStyleSheet("QLabel { font-family: \"Times New Roman\", Times, serif; font-size: 25px; }");
+    username->setStyleSheet("QLineEdit { font-family: \"Times New Roman\", Times, serif; font-size: 25px; }");
+    setStyleSheet("QPushButton { font-family: \"Times New Roman\", Times, serif; font-size: 25px; }");
 
     c_button = new QPushButton("Continue");
     n_button = new QPushButton("New Game");
     q_button = new QPushButton("Quit");
 
-    c_button->setFixedSize(200,30);
-    n_button->setFixedSize(200,30);
-    q_button->setFixedSize(200,30);
+    c_button->setFixedSize(250,50);
+    n_button->setFixedSize(250,50);
+    q_button->setFixedSize(250,50);
 
     button_layout->addWidget(c_button);
     button_layout->addWidget(n_button);
     button_layout->addWidget(q_button);
-
-    button_layout->setAlignment(c_button,Qt::AlignHCenter);
-    button_layout->setAlignment(n_button,Qt::AlignHCenter);
-    button_layout->setAlignment(q_button,Qt::AlignHCenter);
 
     login_layout->addWidget(welcome);
     login_layout->addWidget(username);
@@ -42,6 +41,9 @@ MainWindow::MainWindow(QWidget *parent): QWidget(parent) {
     layout->addWidget(new QWidget(),3,1);
     layout->addWidget(new QWidget(),3,2);
     layout->addWidget(new QWidget(),3,3);
+
+    layout->setAlignment(login_layout,Qt::AlignTop);
+    layout->setAlignment(button_layout,Qt::AlignHCenter);
 
     this->setLayout(layout);
 
