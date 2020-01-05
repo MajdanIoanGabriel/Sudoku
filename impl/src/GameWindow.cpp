@@ -160,7 +160,7 @@ void GameWindow::validate() {
                     return;
         for(int i=1; i<=9; i++)
             for(int j=1; j<=9; j++)
-                cell(i,j)->setColor("#84e36f");
+                cell(i,j)->setColor(((i-1)/3+(j-1)/3)%2 ? "#84e36f" : "#9fff8a");
         timeLabel->setText("Congratulations\n"+timeLabel->text());
         disconnect(clear_button, SIGNAL(clicked()), this, SLOT(clear()));
         disconnect(solve_button, SIGNAL(clicked()), this, SLOT(solve()));
