@@ -27,6 +27,7 @@ public:
     void init();
     ~MainWindow();
     int getDifficulty();
+    QPushButton* getCButton();
 public slots:
     void start();
     void continueGame();

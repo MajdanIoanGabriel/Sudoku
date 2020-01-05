@@ -119,6 +119,8 @@ void Grid::countSolutions(int &number) {
 }
 
 int Grid::countEmptyPos(int gridData[9][9]) {
+    if(!gridData)
+        gridData = data;
     int counter = 0;
     for(int i=0; i<9; i++)
         for(int j=0; j<9; j++)

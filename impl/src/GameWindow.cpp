@@ -9,6 +9,7 @@ GameWindow::GameWindow(QWidget *parent): QWidget(parent) {
     grid = new Grid();
     timer = new QTimer(this);
     time = new QTime(0,0);
+    emptyPos = 81;
 
     grid->generate();
     gridLayout = generateGridLayout(grid);
@@ -99,6 +100,9 @@ void GameWindow::solve() {
             connect(cell(i,j), SIGNAL(textChanged()), this, SLOT(validate()));
         }
     validate();
+    QString filename{username->text()+".txt"}, path{QCoreApplication::applicationDirPath()+"/saves/"};
+    QFile savefile{path+filename};
+    savefile.remove();
 }
 
 void GameWindow::back() {
@@ -148,6 +152,23 @@ void GameWindow::validate() {
             else
                 cell(i,j)->setColor(); 
         }
+
+    if(!grid->countEmptyPos()) {
+        for(int i=1; i<=9; i++)
+            for(int j=1; j<=9; j++)
+                if(cell(i,j)->value() != grid->solvedElem(i,j))
+                    return;
+        for(int i=1; i<=9; i++)
+            for(int j=1; j<=9; j++)
+                cell(i,j)->setColor("#84e36f");
+        timeLabel->setText("Congratulations\n"+timeLabel->text());
+        disconnect(clear_button, SIGNAL(clicked()), this, SLOT(clear()));
+        disconnect(solve_button, SIGNAL(clicked()), this, SLOT(solve()));
+        disconnect((static_cast<MainWindow*>(((QStackedWidget*)parent())->widget(0)))->getCButton(), SIGNAL(clicked()), (static_cast<MainWindow*>(((QStackedWidget*)parent())->widget(0))), SLOT(start()));
+        disconnect((static_cast<MainWindow*>(((QStackedWidget*)parent())->widget(0)))->getCButton(), SIGNAL(clicked()), this, SLOT(load()));
+        (static_cast<MainWindow*>(((QStackedWidget*)parent())->widget(0)))->getCButton()->setStyleSheet("QPushButton { background-color: #DDDDDD; }");
+        timer->stop();
+    }
 }
 
 void GameWindow::setUserName(QString uname) {
@@ -196,6 +217,7 @@ void GameWindow::load() {
         }
 
         grid = new Grid(loadedData);
+        emptyPos = grid->countEmptyPos(loadedData[0]);
 
         for(int i=1; i<=9; i++)
             for(int j=1; j<=9; j++) {
@@ -220,6 +242,7 @@ void GameWindow::load() {
 
 void GameWindow::newGame() {
     grid = new Grid();
+    emptyPos = 81;
     int difficulty{(static_cast<MainWindow*>(((QStackedWidget*)parent())->widget(0)))->getDifficulty()};
 
     timeLabel->setText("00:00:00");
@@ -233,16 +256,28 @@ void GameWindow::newGame() {
             setCell(i,j,grid->elem(i,j));
             if((cell(i,j)->value()))
                 cell(i,j)->setReadOnly(true);
-            else
+            else {
                 cell(i,j)->setReadOnly(false);
+                emptyPos--;
+            }  
             cell(i,j)->setColor();
             connect(cell(i,j), SIGNAL(textChanged()), this, SLOT(validate()));
         }
 
+    connect(clear_button, SIGNAL(clicked()), this, SLOT(clear()));
+    connect(solve_button, SIGNAL(clicked()), this, SLOT(solve()));
+
+    connect((static_cast<MainWindow*>(((QStackedWidget*)parent())->widget(0)))->getCButton(), SIGNAL(clicked()), (static_cast<MainWindow*>(((QStackedWidget*)parent())->widget(0))), SLOT(start()));
+    connect((static_cast<MainWindow*>(((QStackedWidget*)parent())->widget(0)))->getCButton(), SIGNAL(clicked()), this, SLOT(load()));
+    (static_cast<MainWindow*>(((QStackedWidget*)parent())->widget(0)))->getCButton()->setStyleSheet("");
     timer->start(1000);
 }
 
 void GameWindow::count() {
     *time = time->addSecs(1);
     timeLabel->setText(time->toString());
+}
+
+void GameWindow::addEmptyPos(int nr) {
+    emptyPos += nr;
 }

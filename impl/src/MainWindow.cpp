@@ -114,3 +114,7 @@ int MainWindow::getDifficulty() {
     }
     return 2;
 }
+
+QPushButton* MainWindow::getCButton() {
+    return c_button;
+}

@@ -35,6 +35,7 @@ private:
     Grid *grid;
     QTimer *timer;
     QTime *time;
+    int emptyPos;
 
     QGridLayout* generateGridLayout(Grid*);
     void setCell(int,int,int);
@@ -47,6 +48,7 @@ public:
     ~GameWindow();
     Grid* getGrid();
     void setUserName(QString);
+    void addEmptyPos(int);
 public slots:
     void clear();
     void solve();
