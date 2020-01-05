@@ -5,10 +5,10 @@ class Grid
 {
 public:
     Grid();
-    Grid(int**);
+    Grid(int[3][9][9]);
     ~Grid();
 
-    void generate(int);
+    void generate(int difficulty = 0);
     bool solve(int[9][9]);
     void countSolutions(int&);
     int countEmptyPos(int[9][9]);

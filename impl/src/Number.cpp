@@ -6,8 +6,9 @@ Number::Number(int n, int x, int y, std::string color, QWidget *parent): QTextEd
     this->color = color;
     this->x = x;
     this->y = y;
-    setStyleSheet(("Number { background-color: "+color+"; font-size: 33px; color: "+(n==0 ? "#999999" : "#000000")+"} ").c_str());
-    
+    setStyleSheet(("Number { background-color: "+color+"; font-size: 33px; color: "+(n==0 ? "#999999" : "#000000")+"} font-family: \"Times New Roman\", Times, serif; ").c_str());
+    setFixedSize(60,60);
+
     if(n) {
         setText(QString(std::to_string(n).c_str()));
         setReadOnly(true);
@@ -46,7 +47,7 @@ void Number::validate() {
 } 
 
 void Number::setColor(std::string color) {
-    setStyleSheet(("Number { background-color: "+( color == "" ? this->color : color )+"; font-size: 33px; color: "+(isReadOnly() ? "#000000" : "#999999")+"; } ").c_str());
+    setStyleSheet(("Number { background-color: "+( color == "" ? this->color : color )+"; font-size: 33px; color: "+(isReadOnly() ? "#000000" : "#999999")+"; font-family: \"Times New Roman\", Times, serif;} ").c_str());
 }
 
 void Number::focus() {

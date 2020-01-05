@@ -25,15 +25,16 @@ Grid::Grid() {
         solvedData[0][i] = values[i];
     }
 
-    if(solve(solvedData))
-        std::cout<<"Grid succesfully generated"<<std::endl;
+    solve(solvedData);
 
 }
 
-Grid::Grid(int** d) {
+Grid::Grid(int d[3][9][9]) {
     for(int i=0; i<9; i++)
-        for(int j=0; j<9; j++)
-            data[i][j] = d[i][j];
+        for(int j=0; j<9; j++) {
+            data[i][j] = d[0][i][j];
+            solvedData[i][j] = d[1][i][j];
+        }
 }
 
 Grid::~Grid() {}
@@ -127,6 +128,13 @@ int Grid::countEmptyPos(int gridData[9][9]) {
 }
 
 void Grid::generate(int difficulty) {
+    if(!difficulty) {
+        for(int i=0; i<9; i++)
+            for(int j=0; j<9; j++)
+                data[i][j] = 0;
+        return;
+    }
+
     for(int i=0; i<9; i++)
         for(int j=0; j<9; j++)
             data[i][j] = solvedData[i][j];
