@@ -177,12 +177,15 @@ void GameWindow::load() {
 
         for(int i=1; i<=9; i++)
             for(int j=1; j<=9; j++) {
+                disconnect(cell(i,j), SIGNAL(textChanged()), this, SLOT(validate()));
                 setCell(i,j,loadedData[0][i-1][j-1]);
                 if(loadedData[2][i-1][j-1])
                     cell(i,j)->setReadOnly(true);
                 cell(i,j)->setColor();
+                connect(cell(i,j), SIGNAL(textChanged()), this, SLOT(validate()));
         }
 
+        validate();
         savefile.close();
     }
 }
@@ -195,10 +198,14 @@ void GameWindow::newGame() {
 
     for(int i=1; i<=9; i++)
         for(int j=1; j<=9; j++) {
+            disconnect(cell(i,j), SIGNAL(textChanged()), this, SLOT(validate()));
             setCell(i,j,grid->elem(i,j));
             if((cell(i,j)->value()))
                 cell(i,j)->setReadOnly(true);
+            else
+                cell(i,j)->setReadOnly(false);
             cell(i,j)->setColor();
+            connect(cell(i,j), SIGNAL(textChanged()), this, SLOT(validate()));
         }
     
 }
