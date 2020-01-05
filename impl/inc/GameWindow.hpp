@@ -16,6 +16,7 @@
 #include <QLabel>
 #include <QTextStream>
 #include <string>
+#include "MainWindow.hpp"
 #include "Grid.hpp"
 #include "Number.hpp"
 

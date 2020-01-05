@@ -203,7 +203,7 @@ void GameWindow::load() {
 
 void GameWindow::newGame() {
     grid = new Grid();
-    int difficulty{2};
+    int difficulty{(static_cast<MainWindow*>(((QStackedWidget*)parent())->widget(0)))->getDifficulty()};
 
     grid->generate(difficulty);
 
@@ -218,5 +218,5 @@ void GameWindow::newGame() {
             cell(i,j)->setColor();
             connect(cell(i,j), SIGNAL(textChanged()), this, SLOT(validate()));
         }
-    
+
 }
