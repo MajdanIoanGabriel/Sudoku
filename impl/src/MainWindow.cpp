@@ -83,9 +83,10 @@ MainWindow::~MainWindow() {}
 
 void MainWindow::start() {
     QStackedWidget *stack = ((QStackedWidget*)parent());
-    stack->setCurrentWidget(stack->widget(1));
+    GameWindow* gameWindow = static_cast<GameWindow*>(stack->widget(1));
+    stack->setCurrentWidget(gameWindow);
 
-    (static_cast<GameWindow*>(stack->widget(1)))->setUserName(username->text());
+    gameWindow->setUserName(username->text());
 }
 
 void MainWindow::continueGame() {
@@ -101,7 +102,7 @@ void MainWindow::continueGame() {
     else {
         disconnect(c_button, SIGNAL(clicked()), this, SLOT(start()));
         disconnect(c_button, SIGNAL(clicked()), gameWindow, SLOT(load()));
-        c_button->setStyleSheet("QPushButton { background-color: #999999; }");
+        c_button->setStyleSheet("QPushButton { background-color: #DDDDDD; }");
     }
 }
 
@@ -111,5 +112,9 @@ int MainWindow::getDifficulty() {
         if(buttons[i]->isChecked())
             return i+1;
     }
-    return -1;
+    return 2;
+}
+
+QPushButton* MainWindow::getCButton() {
+    return c_button;
 }

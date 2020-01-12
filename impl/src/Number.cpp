@@ -42,8 +42,6 @@ void Number::validate() {
     }
 
     (static_cast<GameWindow*>(parent()))->getGrid()->setElem(value(),x,y);    
-
-    
 } 
 
 void Number::setColor(std::string color) {

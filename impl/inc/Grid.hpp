@@ -11,7 +11,7 @@ public:
     void generate(int difficulty = 0);
     bool solve(int[9][9]);
     void countSolutions(int&);
-    int countEmptyPos(int[9][9]);
+    int countEmptyPos(int[9][9] = 0);
     int elem(int,int);
     void setElem(int,int,int);
     int solvedElem(int,int);
