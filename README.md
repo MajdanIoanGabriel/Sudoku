@@ -27,9 +27,13 @@ This project was written in C ++, the QT5 library was used for the graphical int
 ## Installation
 
 To compile the game simply run in bash:
+```
 ./build.sh
+```
 Then, in order to generate a new game, go in the game folder and run:
+```
 ./sudoku
+```
 
 ## Screenshots
 
