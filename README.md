@@ -24,7 +24,7 @@ In impl we have the file CMakeLists.txt, which is used by the build script, and 
 
 This project was written in C ++, the QT5 library was used for the graphical interface, and was compiled using a CMake script, run by a script written in bash, for a better organization of the project structure. 
 
-## Instalation
+## Installation
 
 To compile the game simply run in bash:
 ./build.sh
